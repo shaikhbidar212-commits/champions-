@@ -1,12 +1,77 @@
-window.onload = function() {
-    hideAll();
-    document.getElementById("home").style.display = "block";
+let selectedBranch = null;
+let selectedBranchTitle = null;
+
+// ====== ON LOAD ======
+window.onload = function () {
+    const validViews = ["home", "branchSelect", "signup"];
+    const hash = window.location.hash.replace("#", "");
+    const initial = validViews.includes(hash) ? hash : "home";
+
+    showView(initial, false);
+    history.replaceState({ view: initial }, "", "#" + initial);
 };
 
-// Input validation
+// ====== BROWSER / PHONE BACK ======
+window.addEventListener("popstate", function (event) {
+    if (event.state && event.state.view) {
+        showView(event.state.view, false);
+    } else {
+        showView("home", false);
+    }
+});
+
+// ====== VIEW NAVIGATION ======
+function navigateTo(view) {
+    showView(view, true);
+}
+
+function showView(view, pushToHistory) {
+    hideAll();
+
+    const el = document.getElementById(view);
+    if (!el) return;
+
+    if (view === "signup") el.style.display = "flex";
+    else el.style.display = "block";
+
+    const staffBtn = document.getElementById("staffBtn");
+    if (staffBtn) {
+        staffBtn.style.display = (view === "home") ? "inline-block" : "none";
+    }
+
+    if (pushToHistory) {
+        history.pushState({ view }, "", "#" + view);
+    }
+}
+
+// ====== NAVBAR ======
+function staffClick() {
+    alert("Staff login coming soon!");
+}
+
+function showStudentMenu() {
+    navigateTo("branchSelect");
+}
+
+// ====== BRANCH FLOW (NOW: DO NOTHING ON CLICK) ======
+function openBranchOptions(branch, branchTitle) {
+    // future use: you can add navigation here later
+    // for now: do nothing when branch clicked
+    return;
+}
+
+// kept for future (not used now)
+function showLoginFromBranch() {}
+function showSignupFromBranch() {}
+
+// cancel: just go back to branchSelect (if you ever open signup manually)
+function cancelToBranchOptions() {
+    navigateTo("branchSelect");
+}
+
+// ====== INPUT VALIDATION ======
 function validateName(event) {
     const ch = String.fromCharCode(event.which || event.keyCode);
-    // Accept only: letters, spaces, special chars (no digits)
     if (/^[a-zA-Z\s!@#$%^&*()\-_=+{}\[\]:;"'<>,.?\/|\\`~]$/.test(ch)) return true;
     return false;
 }
@@ -18,7 +83,6 @@ function handleNamePaste(event) {
 
 function validateRoll(event) {
     const ch = String.fromCharCode(event.which || event.keyCode);
-    // Accept letters, numbers, special chars
     if (/^[a-zA-Z0-9!@#$%^&*()\-_=+{}\[\]:;"'<>,.?\/|\\`~]$/.test(ch)) return true;
     return false;
 }
@@ -29,65 +93,20 @@ function handleRollPaste(event) {
 }
 
 function validatePhone(input) {
-    input.value = input.value.replace(/[^0-9]/g, '').slice(0, 10);
+    input.value = input.value.replace(/[^0-9]/g, "").slice(0, 10);
 }
 
-function staffClick() {
-    alert("Staff login coming soon!");
-}
-
-function showStudentMenu() {
-    hideAll();
-    document.getElementById("branchSelect").style.display = "block";
-}
-
-function closeBranchMenu() {
-    hideAll();
-    document.getElementById("home").style.display = "block";
-}
-
-let selectedBranch = null;
-let selectedBranchTitle = null;
-
-function openBranchOptions(branch, branchTitle) {
-    selectedBranch = branch;
-    selectedBranchTitle = branchTitle;
-    hideAll();
-    document.getElementById("branchOptImg").src = branch + ".jpg";
-    document.getElementById("branchOptName").textContent = branchTitle;
-    document.getElementById("branchOptions").style.display = "block";
-}
-
-function showLoginFromBranch() {
-    // empty for now – you can connect real login later
-}
-
-function showSignupFromBranch() {
-    hideAll();
-    document.getElementById("signupBranchImg").src = selectedBranch + ".jpg";
-    document.getElementById("signupBranchImg").style.display = "inline-block";
-    document.getElementById("signupBranchName").textContent = selectedBranchTitle;
-    document.getElementById("signup").style.display = "flex";
-}
-
-function backToBranchSelect() {
-    hideAll();
-    document.getElementById("branchSelect").style.display = "block";
-}
-
-function cancelToBranchOptions() {
-    hideAll();
-    document.getElementById("branchOptions").style.display = "block";
-}
-
+// ====== HIDE ALL ======
 function hideAll() {
-    let blocks = ["home","branchSelect","branchOptions","studentOptions","login","signup","dashboard","loginOtpStep"];
-    for (let b of blocks) {
-        let e = document.getElementById(b);
+    let blocks = ["home","branchSelect","signup","studentOptions","login","dashboard","loginOtpStep"];
+    blocks.forEach(id => {
+        const e = document.getElementById(id);
         if (e) e.style.display = "none";
-    }
+    });
+
     ["loginError","signupError","loginOtpError"].forEach(id => {
-        let el = document.getElementById(id);
-        if (el) el && el.classList.add("hidden");
+        const el = document.getElementById(id);
+        if (el) el.classList.add("hidden");
     });
 }
+

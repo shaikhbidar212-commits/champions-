@@ -123,4 +123,3 @@ function hideAll() {
         if (el) el.classList.add("hidden");
     });
 }
-

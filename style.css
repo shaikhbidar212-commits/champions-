@@ -197,6 +197,69 @@ body {
     letter-spacing:0.3px;
 }
 
+/* BRANCH OPTIONS PAGE */
+.branchopt-img {
+    width: 100%;
+    max-width: 330px;
+    max-height: 175px;
+    margin: 0 auto;
+    display: block;
+    object-fit: contain;
+    background: #000;
+    border-radius: 18px;
+    box-shadow: 0 3px 18px #0005;
+}
+.branchopt-name {
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.09em;
+    margin: 18px 0 0 0;
+}
+.branchopt-choose-pill {
+    background: #fff;
+    color: #000;
+    padding: 6px 18px;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 0.85em;
+    margin: 12px auto 14px auto;
+    text-transform: uppercase;
+}
+.branchOptionRow {
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+}
+.branchOptionBox {
+    background: #fff;
+    padding: 12px 18px 9px 18px;
+    border-radius: 10px;
+    min-width: 160px;
+    max-width: 200px;
+    box-shadow: 0 2px 10px #0006;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #022a5c;
+    font-size: 1em;
+    cursor: pointer;
+    margin: 0;
+}
+.branchOptionBox span {
+    font-size: 0.83em;
+    color: #555;
+    font-weight: 500;
+    display: block;
+    margin-top: 3px;
+}
+
 /* SIGNUP PAGE */
 .signup-branch-row {
     text-align: center;

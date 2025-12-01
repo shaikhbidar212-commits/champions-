@@ -3,7 +3,7 @@ let selectedBranchTitle = null;
 
 // ====== ON LOAD ======
 window.onload = function () {
-    const validViews = ["home", "branchSelect", "signup"];
+    const validViews = ["home", "branchSelect", "branchOptions"];
     const hash = window.location.hash.replace("#", "");
     const initial = validViews.includes(hash) ? hash : "home";
 
@@ -31,9 +31,9 @@ function showView(view, pushToHistory) {
     const el = document.getElementById(view);
     if (!el) return;
 
-    if (view === "signup") el.style.display = "flex";
-    else el.style.display = "block";
+    el.style.display = "block";
 
+    // Staff button only on home
     const staffBtn = document.getElementById("staffBtn");
     if (staffBtn) {
         staffBtn.style.display = (view === "home") ? "inline-block" : "none";
@@ -53,23 +53,37 @@ function showStudentMenu() {
     navigateTo("branchSelect");
 }
 
-// ====== BRANCH FLOW (NOW: DO NOTHING ON CLICK) ======
+// ====== BRANCH FLOW ======
 function openBranchOptions(branch, branchTitle) {
-    // future use: you can add navigation here later
-    // for now: do nothing when branch clicked
-    return;
+    selectedBranch = branch;
+    selectedBranchTitle = branchTitle;
+
+    const img = document.getElementById("branchOptImg");
+    const name = document.getElementById("branchOptName");
+    if (img) img.src = branch + ".jpg";
+    if (name) name.textContent = branchTitle;
+
+    navigateTo("branchOptions");
 }
 
-// kept for future (not used now)
-function showLoginFromBranch() {}
-function showSignupFromBranch() {}
+function showLoginFromBranch() {
+    alert("Login page will be added soon.");
+}
 
-// cancel: just go back to branchSelect (if you ever open signup manually)
+// 👉 New Student → open signup.html with query parameters
+function showSignupFromBranch() {
+    if (!selectedBranch || !selectedBranchTitle) return;
+
+    const url = `signup.html?branch=${encodeURIComponent(selectedBranch)}&name=${encodeURIComponent(selectedBranchTitle)}`;
+    window.location.href = url;
+}
+
+// kept only for compatibility; not used now
 function cancelToBranchOptions() {
-    navigateTo("branchSelect");
+    navigateTo("branchOptions");
 }
 
-// ====== INPUT VALIDATION ======
+// ====== INPUT VALIDATION (same as before) ======
 function validateName(event) {
     const ch = String.fromCharCode(event.which || event.keyCode);
     if (/^[a-zA-Z\s!@#$%^&*()\-_=+{}\[\]:;"'<>,.?\/|\\`~]$/.test(ch)) return true;
@@ -98,7 +112,7 @@ function validatePhone(input) {
 
 // ====== HIDE ALL ======
 function hideAll() {
-    let blocks = ["home","branchSelect","signup","studentOptions","login","dashboard","loginOtpStep"];
+    let blocks = ["home","branchSelect","branchOptions","studentOptions","login","signup","dashboard","loginOtpStep"];
     blocks.forEach(id => {
         const e = document.getElementById(id);
         if (e) e.style.display = "none";

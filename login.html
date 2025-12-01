@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Existing Student Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle at top, #222 0, #050505 45%, #000 100%);
+        }
+
+        .login-page-wrap {
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 24px 12px;
+        }
+
+        .login-main-card {
+            max-width: 420px;
+            width: 100%;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            width: 100%;
+            background: linear-gradient(to right, #0b63f3, #4f46e5);
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .navbar .menu button {
+            background: white;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .nav-gap {
+            height: 18px;
+        }
+
+        /* BRANCH HERO */
+        .branch-hero-simple {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .branch-hero-simple img {
+            max-width: 380px;
+            width: 100%;
+            max-height: 220px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        .branch-hero-simple-name {
+            margin-top: 6px;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        /* TITLE */
+        .login-title-wrapper {
+            text-align: center;
+            margin: 10px 0 12px 0;
+        }
+        .login-title-box {
+            background: #ffffff;
+            color: #022a5c;
+            padding: 7px 18px;
+            border-radius: 999px;
+            display: inline-flex;
+            gap: 6px;
+            font-weight: bold;
+            font-size: 0.96rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+        }
+        .login-title-box span.sub {
+            font-size: 0.86rem;
+            color: #555;
+        }
+
+        /* FORM CARD */
+        .login-form-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+        }
+
+        .login-form-card label {
+            display: block;
+            margin-top: 8px;
+            margin-bottom: 3px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: #194193;
+        }
+
+        .login-form-card input {
+            width: 100%;
+            font-size: 0.98rem;
+            padding: 8px 9px;
+            border-radius: 8px;
+            border: 1px solid #c7c7c7;
+            box-sizing: border-box;
+        }
+
+        /* PASSWORD FIELD + MONKEY */
+        .password-field-wrap {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.25rem;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* BUTTON ROW */
+        .login-btn-row {
+            margin-top: 14px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .login-btn {
+            flex: 1;
+            padding: 9px 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg,#0b63f3,#4f46e5);
+            color: white;
+        }
+
+        .cancel-btn {
+            flex: 1;
+            padding: 9px 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 999px;
+            background: #151515;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="brand">Champions</div>
+    <div class="menu">
+        <button onclick="window.location.href='index.html'">🏠</button>
+        <button onclick="location.reload()">Student's</button>
+    </div>
+</div>
+
+<div class="nav-gap"></div>
+
+<div class="login-page-wrap">
+    <div class="login-main-card">
+
+        <!-- BRANCH HERO -->
+        <div class="branch-hero-simple">
+            <img id="branchImg" src="" alt="Branch">
+            <div id="branchName" class="branch-hero-simple-name">Branch Name</div>
+        </div>
+
+        <!-- TITLE -->
+        <div class="login-title-wrapper">
+            <div class="login-title-box">
+                <span>Existing Student</span>
+                <span class="sub">(login)</span>
+            </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="login-form-card">
+            <form onsubmit="return false;">
+
+                <label for="loginEmail">Mail ID (Email)</label>
+                <!-- 🔧 CHANGED: type="text" so no gmail rule -->
+                <input type="text" id="loginEmail" placeholder="example@gmail.com">
+
+                <label for="loginPassword">Password</label>
+                <div class="password-field-wrap">
+                    <input type="password" id="loginPassword" placeholder="Enter password">
+                    <span id="togglePassword" class="password-toggle">🙈</span>
+                </div>
+
+                <div class="login-btn-row">
+                    <!-- 🔧 CHANGED: type="button" so browser doesn’t do HTML validation -->
+                    <button type="button" class="login-btn" onclick="submitLogin()">Login</button>
+                    <div class="cancel-btn" onclick="goBack()">Cancel</div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function getParam(n) {
+        return new URLSearchParams(window.location.search).get(n);
+    }
+
+    function setupBranchInfo() {
+        const code = getParam("branch") || "aiml";
+        const title = getParam("name") ? decodeURIComponent(getParam("name")) : "Branch";
+        document.getElementById("branchImg").src = code + ".jpg";
+        document.getElementById("branchName").textContent = title;
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+
+    // DEMO LOGIN CHECK (using localStorage if you store from signup)
+    function submitLogin() {
+        const email = document.getElementById("loginEmail").value.trim();
+        const pass  = document.getElementById("loginPassword").value.trim();
+
+        const user = JSON.parse(localStorage.getItem("demoUser"));
+
+        if (!user) {
+            alert("No demo signup found. Please signup first.");
+            return;
+        }
+
+        if (email === user.email && pass === user.password) {
+            alert("Login Successfully (Demo)!");
+            window.location.href = "student-profile-demo.html";
+        } else {
+            alert("Invalid email or password (Demo)");
+        }
+    }
+
+    window.onload = function () {
+        setupBranchInfo();
+
+        const pass = document.getElementById("loginPassword");
+        const toggle = document.getElementById("togglePassword");
+
+        toggle.onclick = () => {
+            if (pass.type === "password") {
+                pass.type = "text";
+                toggle.textContent = "🐵";
+            } else {
+                pass.type = "password";
+                toggle.textContent = "🙈";
+            }
+        };
+    };
+</script>
+
+</body>
+</html>

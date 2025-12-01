@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Champions - Staff Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle at top, #222 0, #050505 45%, #000 100%);
+        }
+
+        .page-wrap {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            width: 100%;
+            background: linear-gradient(to right, #0b63f3, #4f46e5);
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .brand {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .navbar .menu button {
+            background: white;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .nav-gap {
+            height: 18px;
+        }
+
+        .center-wrap {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 12px 32px;
+        }
+
+        .main-card {
+            max-width: 460px;
+            width: 100%;
+        }
+
+        /* TITLE PILL */
+        .title-box {
+            text-align: center;
+            margin-bottom: 14px;
+        }
+        .title-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffff;
+            color: #022a5c;
+            padding: 7px 18px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.96rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+        }
+        .title-pill span.sub {
+            font-size: 0.86rem;
+            color: #555;
+        }
+
+        /* GENERIC CARD */
+        .content-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 16px 16px 18px 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+        }
+
+        .content-card h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.02rem;
+            color: #0b63f3;
+            text-align: center;
+        }
+
+        .content-card p {
+            margin: 4px 0 0 0;
+            font-size: 0.9rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .btn-row {
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-pill {
+            padding: 10px 0;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg,#0b63f3,#4f46e5);
+            color: #ffffff;
+        }
+
+        .btn-secondary {
+            background: #151515;
+            color: #f5f5f5;
+        }
+
+        @media (min-width: 500px) {
+            .btn-row {
+                flex-direction: row;
+            }
+        }
+
+        /* ATTENDANCE PROFILE */
+        .profile-grid {
+            margin-top: 10px;
+            border-radius: 12px;
+            border: 1px solid #e5e5e5;
+            padding: 10px 12px;
+            background: #f9fafb;
+        }
+
+        .profile-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            padding: 4px 0;
+        }
+
+        .profile-label {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .profile-value {
+            color: #111827;
+            text-align: right;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: #dcfce7;
+            color: #166534;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="brand">Champions</div>
+        <div class="menu">
+            <button onclick="window.location.href='index.html'">🏠</button>
+            <button onclick="window.location.href='students.html'">Student's</button>
+        </div>
+    </div>
+
+    <div class="nav-gap"></div>
+
+    <div class="center-wrap">
+        <div class="main-card">
+
+            <!-- TITLE -->
+            <div class="title-box">
+                <div class="title-pill">
+                    <span>Staff</span>
+                    <span class="sub">(demo)</span>
+                </div>
+            </div>
+
+            <!-- VIEW 1: STAFF DEMO ENTRY -->
+            <div id="staffWelcome" class="content-card">
+                <h2>Staff Demo Panel</h2>
+                <p>This is only a demo view for staff features.</p>
+
+                <div class="btn-row">
+                    <button class="btn-pill btn-primary" onclick="openDashboard()">
+                        Open Staff Demo Dashboard
+                    </button>
+                </div>
+            </div>
+
+            <!-- VIEW 2: STAFF DASHBOARD -->
+            <div id="staffDashboard" class="content-card" style="display:none;">
+                <h2>Staff Dashboard (Demo)</h2>
+                <p>Choose an option to view demo data.</p>
+
+                <div class="btn-row">
+                    <button class="btn-pill btn-primary" onclick="openAttendance()">
+                        Attendance
+                    </button>
+                    <button class="btn-pill btn-secondary" onclick="backToWelcome()">
+                        Back
+                    </button>
+                </div>
+            </div>
+
+            <!-- VIEW 3: ATTENDANCE + DEMO STUDENT PROFILE -->
+            <div id="staffAttendance" class="content-card" style="display:none;">
+                <h2>Attendance (Demo)</h2>
+                <p>Showing demo student profile stored for staff attendance.</p>
+
+                <div class="profile-grid">
+                    <div class="profile-row">
+                        <div class="profile-label">Student Name</div>
+                        <div class="profile-value" id="demoName">Demo Student</div>
+                    </div>
+                    <div class="profile-row">
+                        <div class="profile-label">Roll Number</div>
+                        <div class="profile-value" id="demoRoll">21A91A0000</div>
+                    </div>
+                    <div class="profile-row">
+                        <div class="profile-label">Branch</div>
+                        <div class="profile-value" id="demoBranch">Artificial Intelligence &amp; ML (AIML)</div>
+                    </div>
+                    <div class="profile-row">
+                        <div class="profile-label">Year</div>
+                        <div class="profile-value" id="demoYear">2nd Year</div>
+                    </div>
+                    <div class="profile-row">
+                        <div class="profile-label">Today Status</div>
+                        <div class="profile-value">
+                            <span class="status-pill" id="demoStatus">Present</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-row" style="margin-top:14px;">
+                    <button class="btn-pill btn-secondary" onclick="backToDashboard()">
+                        Back to Dashboard
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const welcomeView = document.getElementById('staffWelcome');
+    const dashboardView = document.getElementById('staffDashboard');
+    const attendanceView = document.getElementById('staffAttendance');
+
+    function openDashboard() {
+        welcomeView.style.display = 'none';
+        attendanceView.style.display = 'none';
+        dashboardView.style.display = 'block';
+    }
+
+    function openAttendance() {
+        dashboardView.style.display = 'none';
+        attendanceView.style.display = 'block';
+
+        // 🔹 If in future you store demo student in localStorage from student signup,
+        // you can load it here, for now it's static.
+        try {
+            const saved = localStorage.getItem('demoStudent');
+            if (saved) {
+                const data = JSON.parse(saved);
+                if (data.fullName) document.getElementById('demoName').textContent = data.fullName;
+                if (data.rollNo) document.getElementById('demoRoll').textContent = data.rollNo;
+                if (data.branch) document.getElementById('demoBranch').textContent = data.branch;
+            }
+        } catch (e) {
+            // ignore if no data
+        }
+    }
+
+    function backToDashboard() {
+        attendanceView.style.display = 'none';
+        dashboardView.style.display = 'block';
+    }
+
+    function backToWelcome() {
+        dashboardView.style.display = 'none';
+        attendanceView.style.display = 'none';
+        welcomeView.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

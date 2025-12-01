@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Student Signup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle at top, #222 0, #050505 45%, #000 100%);
+        }
+
+        .signup-page-wrap {
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 24px 12px;
+        }
+
+        .signup-main-card {
+            max-width: 420px;
+            width: 100%;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            width: 100%;
+            background: linear-gradient(to right, #0b63f3, #4f46e5);
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .navbar .menu button {
+            background: white;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .nav-gap {
+            height: 18px;
+        }
+
+        /* BRANCH HERO */
+        .branch-hero-simple {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .branch-hero-simple img {
+            max-width: 380px;
+            width: 100%;
+            max-height: 220px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        .branch-hero-simple-name {
+            margin-top: 6px;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        /* TITLE */
+        .new-student-wrapper {
+            text-align: center;
+            margin: 10px 0 12px 0;
+        }
+        .new-student-box {
+            background: #ffffff;
+            color: #022a5c;
+            padding: 7px 18px;
+            border-radius: 999px;
+            display: inline-flex;
+            gap: 6px;
+            font-weight: bold;
+            font-size: 0.96rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+        }
+        .new-student-box span.sub {
+            font-size: 0.86rem;
+            color: #555;
+        }
+
+        /* FORM CARD */
+        .signup-form-card-simple {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+        }
+
+        .signup-form-card-simple label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 3px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: #194193;
+        }
+
+        /* RED * for required fields */
+        .req {
+            color: red;
+        }
+
+        .signup-form-card-simple input {
+            width: 100%;
+            font-size: 0.98rem;
+            padding: 8px 9px;
+            border-radius: 8px;
+            border: 1px solid #c7c7c7;
+            box-sizing: border-box;
+        }
+
+        /* PASSWORD FIELD + MONKEY */
+        .password-field-wrap {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.25rem;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* STRENGTH METER (Initially Hidden) */
+        #strengthContainer {
+            display: none;
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+
+        #strengthText {
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .strength-bar {
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            background: #e5e5e5;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 999px;
+            background: #dc2626;
+            transition: width 0.2s ease, background 0.2s ease;
+        }
+
+        /* CONFIRM PASSWORD (Initially Hidden) */
+        #confirmBlock {
+            display: none;
+        }
+
+        /* BUTTONS */
+        .signup-btn-row-line {
+            margin-top: 14px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .signup-btn-line,
+        .cancel-btn-line,
+        .demo-btn-line {
+            flex: 1;
+            padding: 9px 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .signup-btn-line {
+            background: linear-gradient(135deg,#0b63f3,#4f46e5);
+            color: white;
+        }
+
+        .cancel-btn-line {
+            background: #151515;
+            color: white;
+        }
+
+        .demo-btn-line {
+            background: #ffffff;
+            color: #0b63f3;
+            border: 2px solid #0b63f3;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="brand">Champions</div>
+    <div class="menu">
+        <button onclick="window.location.href='index.html'">🏠</button>
+        <button onclick="location.reload()">Student's</button>
+    </div>
+</div>
+
+<div class="nav-gap"></div>
+
+<div class="signup-page-wrap">
+    <div class="signup-main-card">
+
+        <div class="branch-hero-simple">
+            <img id="branchImg" src="" alt="Branch">
+            <div id="branchName" class="branch-hero-simple-name">Branch Name</div>
+        </div>
+
+        <div class="new-student-wrapper">
+            <div class="new-student-box">
+                <span>New Student</span>
+                <span class="sub">(signup)</span>
+            </div>
+        </div>
+
+        <div class="signup-form-card-simple">
+            <form onsubmit="return false;">
+
+                <label>Full Name <span class="req">*</span></label>
+                <input type="text" id="fullName" placeholder="Enter full name" required>
+
+                <label>Roll Number <span class="req">*</span></label>
+                <input type="text" id="rollNo" placeholder="Enter roll number" required>
+
+                <label>Father Name <span class="req">*</span></label>
+                <input type="text" id="fatherName" placeholder="Enter father name" required>
+
+                <label>Phone Number</label>
+                <input type="text" id="phone" placeholder="Enter phone number">
+
+                <label>Mail ID (Email) <span class="req">*</span></label>
+                <input type="email" id="email" placeholder="example@gmail.com" required>
+
+                <!-- PASSWORD WITH MONKEY -->
+                <label>Create Password <span class="req">*</span></label>
+                <div class="password-field-wrap">
+                    <input type="password" id="password" placeholder="Create password" required>
+                    <span id="togglePassword" class="password-toggle">🙈</span>
+                </div>
+
+                <!-- Strength meter hidden initially -->
+                <div id="strengthContainer">
+                    <div id="strengthText">Strength: -</div>
+                    <div class="strength-bar">
+                        <div id="strengthFill" class="strength-fill"></div>
+                    </div>
+                </div>
+
+                <!-- Confirm Password hidden initially -->
+                <div id="confirmBlock">
+                    <label>Confirm Password <span class="req">*</span></label>
+                    <div class="password-field-wrap">
+                        <input type="password" id="confirmPassword" placeholder="Confirm password">
+                        <span id="toggleConfirm" class="password-toggle">🙈</span>
+                    </div>
+                    <!-- LIVE ERROR -->
+                    <div id="matchError" style="color:red; font-size:0.80rem; margin-top:4px; display:none;">
+                        Passwords do not match
+                    </div>
+                </div>
+
+                <div class="signup-btn-row-line">
+                    <!-- Cancel, Try Demo, Signup (Try Demo is in between) -->
+                    <button type="button" class="cancel-btn-line" onclick="goBack()">Cancel</button>
+                    <button type="button" class="demo-btn-line" onclick="tryDemo()">Try Demo</button>
+                    <button type="button" class="signup-btn-line" onclick="submitNewStudent()">Signup</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentBranch = "aiml";
+    let currentBranchName = "Branch";
+
+    function getParam(n) {
+        return new URLSearchParams(window.location.search).get(n);
+    }
+
+    function setupBranchInfo() {
+        let b = getParam("branch") || "aiml";
+        let t = getParam("name") ? decodeURIComponent(getParam("name")) : "Branch";
+        currentBranch = b;
+        currentBranchName = t;
+
+        document.getElementById("branchImg").src = b + ".jpg";
+        document.getElementById("branchName").textContent = t;
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+
+    const pwd = document.getElementById("password");
+    const strengthContainer = document.getElementById("strengthContainer");
+    const strengthText = document.getElementById("strengthText");
+    const strengthFill = document.getElementById("strengthFill");
+    const confirmBlock = document.getElementById("confirmBlock");
+    const toggle = document.getElementById("togglePassword");
+    const confirmPwd = document.getElementById("confirmPassword");
+    const toggleConfirm = document.getElementById("toggleConfirm");
+    const matchError = document.getElementById("matchError");
+
+    // show/hide strength + confirm only after typing password
+    pwd.addEventListener("input", () => {
+        const value = pwd.value;
+
+        if (value.length > 0) {
+            strengthContainer.style.display = "block";
+            confirmBlock.style.display = "block";
+        } else {
+            strengthContainer.style.display = "none";
+            confirmBlock.style.display = "none";
+            confirmPwd.value = "";
+            matchError.style.display = "none";
+        }
+
+        updateStrength(value);
+        if (confirmPwd.value) checkMatch();
+    });
+
+    confirmPwd.addEventListener("input", () => {
+        checkMatch();
+    });
+
+    function checkMatch() {
+        if (pwd.value && confirmPwd.value) {
+            if (pwd.value === confirmPwd.value) {
+                matchError.style.display = "none";
+            } else {
+                matchError.style.display = "block";
+            }
+        } else {
+            matchError.style.display = "none";
+        }
+    }
+
+    toggle.addEventListener("click", () => {
+        if (pwd.type === "password") {
+            pwd.type = "text";
+            toggle.textContent = "🐵";
+        } else {
+            pwd.type = "password";
+            toggle.textContent = "🙈";
+        }
+    });
+
+    toggleConfirm.addEventListener("click", () => {
+        if (confirmPwd.type === "password") {
+            confirmPwd.type = "text";
+            toggleConfirm.textContent = "🐵";
+        } else {
+            confirmPwd.type = "password";
+            toggleConfirm.textContent = "🙈";
+        }
+    });
+
+    function updateStrength(pass) {
+        let score = 0;
+        if (pass.length >= 6) score++;
+        if (pass.length >= 10) score++;
+        if (/[0-9]/.test(pass)) score++;
+        if (/[A-Z]/.test(pass)) score++;
+        if (/[^A-Za-z0-9]/.test(pass)) score++;
+
+        let label = "";
+        let width = "0%";
+        let color = "#dc2626";
+
+        if (score <= 1) {
+            label = "Very Weak";
+            width = "20%";
+            color = "#dc2626";
+        } else if (score == 2) {
+            label = "Weak";
+            width = "40%";
+            color = "#fb923c";
+        } else if (score == 3) {
+            label = "Medium";
+            width = "60%";
+            color = "#facc15";
+        } else if (score == 4) {
+            label = "Strong";
+            width = "80%";
+            color = "#22c55e";
+        } else {
+            label = "Very Strong";
+            width = "100%";
+            color = "#16a34a";
+        }
+
+        strengthText.textContent = "Strength: " + label;
+        strengthFill.style.width = width;
+        strengthFill.style.background = color;
+    }
+
+    // 🔹 Save demo student data for login & profile
+    function saveDemoStudent(full, roll, father, phone, email, pass) {
+        const student = {
+            fullName: full,
+            rollNo: roll,
+            fatherName: father,
+            phone: phone,
+            email: email,
+            password: pass,
+            branch: currentBranch,
+            branchName: currentBranchName
+        };
+        localStorage.setItem("demoStudent", JSON.stringify(student));
+    }
+
+    // Normal signup demo (just demo + save)
+    function submitNewStudent() {
+        let full = document.getElementById("fullName").value.trim();
+        let roll = document.getElementById("rollNo").value.trim();
+        let father = document.getElementById("fatherName").value.trim();
+        let phone = document.getElementById("phone").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let pass = pwd.value.trim();
+        let cpass = confirmPwd.value.trim();
+
+        if (!full || !roll || !father || !email || !pass || !cpass) {
+            alert("Please fill all required fields (*)");
+            return;
+        }
+
+        if (pass !== cpass) {
+            matchError.style.display = "block";
+            return;
+        }
+
+        // ✅ save for login demo
+        saveDemoStudent(full, roll, father, phone, email, pass);
+
+        alert("Signup demo complete! (Data saved for login demo)");
+    }
+
+    // TRY DEMO: save + go to lecturer details page
+    function tryDemo() {
+        let full = document.getElementById("fullName").value.trim();
+        let roll = document.getElementById("rollNo").value.trim();
+        let father = document.getElementById("fatherName").value.trim();
+        let phone = document.getElementById("phone").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let pass = pwd.value.trim();
+        let cpass = confirmPwd.value.trim();
+
+        if (!full || !roll || !father || !email || !pass || !cpass) {
+            alert("Please fill all required fields (*)");
+            return;
+        }
+
+        if (pass !== cpass) {
+            matchError.style.display = "block";
+            return;
+        }
+
+        // ✅ save for login demo (same as signup)
+        saveDemoStudent(full, roll, father, phone, email, pass);
+
+        alert("Signup successfully completed (Demo)!");
+
+        const url = "lecturer-demo.html"
+            + "?branch=" + encodeURIComponent(currentBranch)
+            + "&name=" + encodeURIComponent(currentBranchName);
+
+        window.location.href = url;
+    }
+
+    window.onload = setupBranchInfo;
+</script>
+
+</body>
+</html>

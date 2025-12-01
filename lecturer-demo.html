@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lecturer Demo – Champions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle at top, #222 0, #050505 45%, #000 100%);
+            color: #fff;
+        }
+
+        .page-wrap {
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            width: 100%;
+            background: linear-gradient(to right, #0b63f3, #4f46e5);
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .navbar .menu button {
+            background: white;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .nav-gap {
+            height: 18px;
+        }
+
+        .content-wrap {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 12px 24px 12px;
+        }
+
+        /* BRANCH HERO */
+        .branch-hero-simple {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .branch-hero-simple img {
+            max-width: 380px;
+            width: 100%;
+            max-height: 220px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        .branch-hero-simple-name {
+            margin-top: 6px;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .demo-heading {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+        .demo-heading h2 {
+            margin: 0;
+            font-size: 1.4rem;
+        }
+
+        /* CARD */
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+            color: #0f172a;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #1e293b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 6px;
+            font-size: 0.92rem;
+        }
+
+        th, td {
+            padding: 8px 6px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            background: #eff6ff;
+            font-weight: 700;
+            color: #1d4ed8;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #e5e7eb;
+            color: #4b5563;
+        }
+
+        .back-note {
+            margin-top: 14px;
+            font-size: 0.82rem;
+            color: #64748b;
+        }
+
+        .back-note span {
+            color: #0b63f3;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <div class="navbar">
+        <div class="brand">Champions</div>
+        <div class="menu">
+            <button onclick="window.location.href='index.html'">🏠</button>
+            <button onclick="window.history.back()">Student's</button>
+        </div>
+    </div>
+
+    <div class="nav-gap"></div>
+
+    <div class="content-wrap">
+
+        <div class="branch-hero-simple">
+            <img id="branchImg" src="" alt="Branch">
+            <div id="branchName" class="branch-hero-simple-name">Branch Name</div>
+        </div>
+
+        <div class="demo-heading">
+            <h2>Lecturer Demo – 1st Year Subjects</h2>
+        </div>
+
+        <div class="card">
+            <h3>Subject & Lecturer Details (Demo)</h3>
+
+            <table id="subjectTable">
+                <thead>
+                    <tr>
+                        <th>Subject Code</th>
+                        <th>Subject Name</th>
+                        <th>Lecturer (Demo)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Filled by JS -->
+                </tbody>
+            </table>
+
+            <div class="back-note">
+                Status will change to Present/Absent after staff submit demo attendance.
+                <br>
+                <span onclick="window.history.back()">← Go back to student signup</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    let currentBranch = "aiml";
+    let currentBranchName = "Branch";
+
+    function getParam(n) {
+        return new URLSearchParams(window.location.search).get(n);
+    }
+
+    function setupBranchInfo() {
+        let b = getParam("branch") || "aiml";
+        let t = getParam("name") ? decodeURIComponent(getParam("name")) : "Branch";
+
+        currentBranch = b.toLowerCase();
+        currentBranchName = t;
+
+        document.getElementById("branchImg").src = currentBranch + ".jpg";
+        document.getElementById("branchName").textContent = currentBranchName;
+    }
+
+    function setupSubjects() {
+        const specialBranches = ["cse", "aiml", "ece"];
+        const tbody = document.querySelector("#subjectTable tbody");
+        tbody.innerHTML = "";
+
+        let subjects = [];
+
+        if (specialBranches.includes(currentBranch)) {
+            // CSE / AIML / ECE
+            subjects = [
+                { code: "LA&C", name: "Linear Algebra & Calculus", lecturer: "Demo – LA&C" },
+                { code: "BCME", name: "Basic Civil & Mechanical Engineering", lecturer: "Demo – BCME" },
+                { code: "CHE",  name: "Engineering Chemistry", lecturer: "Demo – Chemistry" },
+                { code: "CE",   name: "Communicative English", lecturer: "Demo – English" },
+                { code: "IP",   name: "Introduction to Programming", lecturer: "Demo – IP" }
+            ];
+        } else {
+            // Remaining branches
+            subjects = [
+                { code: "LA&C", name: "Linear Algebra & Calculus", lecturer: "Demo – LA&C" },
+                { code: "EG",   name: "Engineering Graphics", lecturer: "Demo – EG" },
+                { code: "IP",   name: "Introduction to Programming", lecturer: "Demo – IP" },
+                { code: "PHY",  name: "Engineering Physics", lecturer: "Demo – Physics" }
+            ];
+        }
+
+        subjects.forEach(sub => {
+            const tr = document.createElement("tr");
+
+            const tdCode = document.createElement("td");
+            tdCode.textContent = sub.code;
+
+            const tdName = document.createElement("td");
+            tdName.textContent = sub.name;
+
+            const tdLect = document.createElement("td");
+            tdLect.textContent = sub.lecturer;
+
+            const tdStatus = document.createElement("td");
+            const span = document.createElement("span");
+            span.classList.add("status-pill", "status-pending");
+            span.textContent = "Not submitted";
+            tdStatus.appendChild(span);
+
+            tr.appendChild(tdCode);
+            tr.appendChild(tdName);
+            tr.appendChild(tdLect);
+            tr.appendChild(tdStatus);
+
+            tbody.appendChild(tr);
+        });
+    }
+
+    window.onload = function() {
+        setupBranchInfo();
+        setupSubjects();
+    };
+</script>
+
+</body>
+</html>

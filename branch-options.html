@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Option - Student</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        #branchOptions {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+            background: #000 !important;
+        }
+        .container#branchOptions {
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        .pure-black-gap {
+            height: 18px;
+            width: 100%;
+            background: #000000;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR: Home + Student's -->
+<div class="navbar">
+    <div class="brand">Champions</div>
+    <div class="menu">
+        <button onclick="window.location.href='index.html'">🏠</button>
+        <button onclick="window.location.reload()">Student's</button>
+    </div>
+</div>
+
+<div class="pure-black-gap"></div>
+
+<!-- CHOOSE LOGIN / SIGNUP -->
+<div class="container" id="branchOptions" style="min-height:100vh;">
+    <div style="display:flex;flex-direction:column;align-items:center;margin-top:0px;">
+
+        <img id="branchOptImg" class="branchopt-img" src="" alt="Branch">
+
+        <div class="branchopt-name" id="branchOptName">Branch Name</div>
+
+        <div class="branchopt-choose-pill">choose option below</div>
+
+        <div class="branchOptionRow">
+            <div class="branchOptionBox" onclick="showLoginFromBranch()">
+                Existing Student
+                <span>(login)</span>
+            </div>
+
+            <div class="branchOptionBox" onclick="showSignupFromBranch()">
+                New Student
+                <span>(signup)</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    let branchCode = null;
+    let branchTitle = null;
+
+    function getParam(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+    }
+
+    function setupBranchOptions() {
+        branchCode = getParam("branch") || localStorage.getItem("selectedBranch") || "aiml";
+
+        branchTitle = getParam("name")
+            ? decodeURIComponent(getParam("name"))
+            : (localStorage.getItem("selectedBranchTitle") || "Branch");
+
+        document.getElementById("branchOptImg").src = branchCode + ".jpg";
+        document.getElementById("branchOptName").textContent = branchTitle;
+    }
+
+    // 🔥 Existing Student → login.html with same branch + name
+    function showLoginFromBranch() {
+        window.location.href =
+            `login.html?branch=${encodeURIComponent(branchCode)}&name=${encodeURIComponent(branchTitle)}`;
+    }
+
+    // New Student → signup.html with same branch + name
+    function showSignupFromBranch() {
+        window.location.href =
+            `signup.html?branch=${encodeURIComponent(branchCode)}&name=${encodeURIComponent(branchTitle)}`;
+    }
+
+    window.onload = setupBranchOptions;
+</script>
+
+</body>
+</html>

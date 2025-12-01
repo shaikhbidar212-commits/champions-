@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Champions - Students</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR: Home icon + Student's -->
+<div class="navbar">
+    <div class="brand">Champions</div>
+    <div class="menu">
+        <!-- 🏠 Home icon → go to main home page -->
+        <button onclick="window.location.href='index.html'">🏠</button>
+        <!-- Student's → this page (branch select) -->
+        <button onclick="window.location.href='students.html'">Student's</button>
+    </div>
+</div>
+
+<!-- BRANCH SELECT PAGE -->
+<div class="container" id="branchSelect">
+    <h2 style="text-align:center;color:#fff;margin:18px 0 17px 0;">Select Your Branch</h2>
+
+    <div class="branch-grid">
+
+        <div class="branch-card"
+             onclick="openBranchOptions('aiml', 'Artificial Intelligence and Machine Learning (AIML)')">
+            <img src="aiml.jpg" alt="AIML">
+            <label>Artificial Intelligence and Machine Learning (AIML)</label>
+        </div>
+
+        <div class="branch-card"
+             onclick="openBranchOptions('aids', 'Artificial Intelligence & Data Science (AIDS)')">
+            <img src="aids.jpg" alt="AIDS">
+            <label>Artificial Intelligence &amp; Data Science (AIDS)</label>
+        </div>
+
+        <div class="branch-card"
+             onclick="openBranchOptions('cse', 'Computer Science Engineering (CSE)')">
+            <img src="cse.jpg" alt="CSE">
+            <label>Computer Science Engineering (CSE)</label>
+        </div>
+
+        <div class="branch-card"
+             onclick="openBranchOptions('cst', 'Computer Science & Technology (CST)')">
+            <img src="cst.jpg" alt="CST" class="cover-img">
+            <label>Computer Science &amp; Technology (CST)</label>
+        </div>
+
+        <div class="branch-card"
+             onclick="openBranchOptions('cs', 'Cyber Security (CS)')">
+            <img src="cs.jpg" alt="CS">
+            <label>Cyber Security (CS)</label>
+        </div>
+
+        <div class="branch-card"
+             onclick="openBranchOptions('ece', 'Electronics and Communication Engineering (ECE)')">
+            <img src="ece.jpg" alt="ECE">
+            <label>Electronics and Communication Engineering (ECE)</label>
+        </div>
+
+        <div class="branch-card"
+             onclick="openBranchOptions('eee', 'Electrical and Electronics Engineering (EEE)')">
+            <img src="eee.jpg" alt="EEE" class="cover-img">
+            <label>Electrical and Electronics Engineering (EEE)</label>
+        </div>
+
+        <div class="branch-card"
+             onclick="openBranchOptions('me', 'Mechanical Engineering (ME)')">
+            <img src="me.jpg" alt="ME">
+            <label>Mechanical Engineering (ME)</label>
+        </div>
+
+        <div class="branch-card"
+             onclick="openBranchOptions('ce', 'Civil Engineering (CE)')">
+            <img src="ce.jpg" alt="CE" class="cover-img">
+            <label>Civil Engineering (CE)</label>
+        </div>
+
+    </div>
+</div>
+
+<script src="students.js"></script>
+</body>
+</html>

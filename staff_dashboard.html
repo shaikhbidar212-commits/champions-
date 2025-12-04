@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Staff Attendance Dashboard</title>
+
+  <!-- Shared styles (navbar, brand, etc.) -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0f172a; /* dark navy */
+      color: #e5e7eb;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0 10px 30px;
+    }
+
+    /* Same gap bar as in branch-options.html */
+    .pure-black-gap {
+      height: 18px;
+      width: 100%;
+      background: #000000;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      background: #020617;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      padding: 20px 24px 30px;
+      border: 1px solid #1f2937;
+      margin: 30px auto 0; /* center under navbar */
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #1f2937;
+      padding-bottom: 12px;
+    }
+
+    .header-left h1 {
+      font-size: 22px;
+      margin-bottom: 4px;
+      color: #f9fafb;
+    }
+
+    .header-left p {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .header-right span {
+      display: block;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 14px;
+    }
+
+    .controls .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 13px;
+    }
+
+    .controls label {
+      color: #d1d5db;
+    }
+
+    .controls select,
+    .controls input[type="date"] {
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .controls select:focus,
+    .controls input[type="date"]:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin: 8px 0 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.1s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.6);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #e5e7eb;
+      border: 1px solid #4b5563;
+    }
+
+    .btn-outline:hover {
+      background: #111827;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 999px;
+    }
+
+    .table-wrapper {
+      margin-top: 8px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #1f2937;
+      background: #020617;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    thead {
+      background: #111827;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 10px 12px;
+      color: #9ca3af;
+      font-weight: 600;
+      border-bottom: 1px solid #1f2937;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #020617;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: #030712;
+    }
+
+    tbody td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #111827;
+      vertical-align: middle;
+    }
+
+    tbody tr:hover {
+      background: #0b1120;
+    }
+
+    .status-group {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .status-group label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .status-group input[type="radio"] {
+      accent-color: #3b82f6;
+      cursor: pointer;
+    }
+
+    .roll-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: #0f172a;
+      color: #e5e7eb;
+      border: 1px solid #1f2937;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      font-size: 12px;
+      color: #9ca3af;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .summary-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .summary-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid #1f2937;
+    }
+
+    .summary-pill span.value {
+      font-weight: 600;
+      color: #e5e7eb;
+      margin-left: 3px;
+    }
+
+    @media (max-width: 640px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .header-right {
+        text-align: left;
+      }
+
+      thead th:nth-child(3),
+      tbody td:nth-child(3) {
+        display: none; /* hide Dept on small screens */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR: Champions + Home + Staff -->
+  <div class="navbar">
+    <div class="brand">Champions</div>
+    <div class="menu">
+      <button onclick="window.location.href='Home.html'">🏠</button>
+      <button onclick="window.location.reload()">Staff</button>
+    </div>
+  </div>
+
+  <div class="pure-black-gap"></div>
+
+  <div class="container">
+    <!-- Top Header -->
+    <div class="header">
+      <div class="header-left">
+        <h1>Staff Attendance Dashboard</h1>
+        <p>Mark student attendance as Present or Absent for the selected class and date.</p>
+      </div>
+      <div class="header-right">
+        <span><strong>Staff:</strong> Demo Staff</span>
+        <span id="currentDateTime"></span>
+      </div>
+    </div>
+
+    <!-- Filters / Controls -->
+    <div class="controls">
+      <div class="field">
+        <label for="classSelect">Class / Year</label>
+        <select id="classSelect">
+          <option value="CSE-A">CSE - A (I Year)</option>
+          <option value="CSE-B">CSE - B (I Year)</option>
+          <option value="AIML-A">AI&ML - A (I Year)</option>
+          <option value="ECE-A">ECE - A (I Year)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="subjectSelect">Subject</label>
+        <select id="subjectSelect">
+          <option value="Maths">Mathematics</option>
+          <option value="Physics">Physics</option>
+          <option value="Programming">Programming in C</option>
+          <option value="English">English</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="dateInput">Date</label>
+        <input type="date" id="dateInput" />
+      </div>
+    </div>
+
+    <!-- Button Row -->
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btnSubmit">
+        ✓ Save Attendance
+      </button>
+      <button class="btn btn-outline btn-sm" id="btnAllPresent">
+        Mark All Present
+      </button>
+      <button class="btn btn-outline btn-sm" id="btnAllAbsent">
+        Mark All Absent
+      </button>
+      <button class="btn btn-outline btn-sm" id="btnClear">
+        Clear Selection
+      </button>
+    </div>
+
+    <!-- Students Table -->
+    <div class="table-wrapper">
+      <table id="attendanceTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Student Name</th>
+            <th>Dept</th>
+            <th>Roll No</th>
+            <th>Attendance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Demo Students -->
+          <tr>
+            <td>1</td>
+            <td>Abhinav R</td>
+            <td>CSE</td>
+            <td><span class="roll-badge">23CSE001</span></td>
+            <td>
+              <div class="status-group">
+                <label>
+                  <input type="radio" name="student1" value="Present" />
+                  Present
+                </label>
+                <label>
+                  <input type="radio" name="student1" value="Absent" />
+                  Absent
+                </label>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>Bhargavi S</td>
+            <td>CSE</td>
+            <td><span class="roll-badge">23CSE002</span></td>
+            <td>
+              <div class="status-group">
+                <label>
+                  <input type="radio" name="student2" value="Present" />
+                  Present
+                </label>
+                <label>
+                  <input type="radio" name="student2" value="Absent" />
+                  Absent
+                </label>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td>Charan T</td>
+            <td>CSE</td>
+            <td><span class="roll-badge">23CSE003</span></td>
+            <td>
+              <div class="status-group">
+                <label>
+                  <input type="radio" name="student3" value="Present" />
+                  Present
+                </label>
+                <label>
+                  <input type="radio" name="student3" value="Absent" />
+                  Absent
+                </label>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>4</td>
+            <td>Divya K</td>
+            <td>CSE</td>
+            <td><span class="roll-badge">23CSE004</span></td>
+            <td>
+              <div class="status-group">
+                <label>
+                  <input type="radio" name="student4" value="Present" />
+                  Present
+                </label>
+                <label>
+                  <input type="radio" name="student4" value="Absent" />
+                  Absent
+                </label>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>5</td>
+            <td>Fahad M</td>
+            <td>CSE</td>
+            <td><span class="roll-badge">23CSE005</span></td>
+            <td>
+              <div class="status-group">
+                <label>
+                  <input type="radio" name="student5" value="Present" />
+                  Present
+                </label>
+                <label>
+                  <input type="radio" name="student5" value="Absent" />
+                  Absent
+                </label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer Summary -->
+    <div class="footer">
+      <div class="summary-badges">
+        <div class="summary-pill">
+          Total Students: <span class="value" id="totalStudents">0</span>
+        </div>
+        <div class="summary-pill">
+          Present: <span class="value" id="presentCount">0</span>
+        </div>
+        <div class="summary-pill">
+          Absent: <span class="value" id="absentCount">0</span>
+        </div>
+      </div>
+      <div id="saveMessage"></div>
+    </div>
+  </div>
+
+  <script>
+    // Set current date in header and default date input
+    const currentDateTimeEl = document.getElementById("currentDateTime");
+    const dateInput = document.getElementById("dateInput");
+
+    function setCurrentDateTime() {
+      const now = new Date();
+      const options = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      };
+      currentDateTimeEl.textContent = now.toLocaleString("en-IN", options);
+    }
+
+    function setTodayForDateInput() {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const dd = String(today.getDate()).padStart(2, "0");
+      dateInput.value = `${yyyy}-${mm}-${dd}`;
+    }
+
+    setCurrentDateTime();
+    setTodayForDateInput();
+
+    // Attendance summary
+    const tbody = document.querySelector("#attendanceTable tbody");
+    const totalStudentsEl = document.getElementById("totalStudents");
+    const presentCountEl = document.getElementById("presentCount");
+    const absentCountEl = document.getElementById("absentCount");
+    const saveMessageEl = document.getElementById("saveMessage");
+
+    function updateSummary() {
+      const rows = tbody.querySelectorAll("tr");
+      let total = rows.length;
+      let present = 0;
+      let absent = 0;
+
+      rows.forEach((row, index) => {
+        const radios = row.querySelectorAll(`input[name="student${index + 1}"]`);
+        radios.forEach((r) => {
+          if (r.checked && r.value === "Present") present++;
+          if (r.checked && r.value === "Absent") absent++;
+        });
+      });
+
+      totalStudentsEl.textContent = total;
+      presentCountEl.textContent = present;
+      absentCountEl.textContent = absent;
+    }
+
+    // Attach change listeners to radios
+    tbody.addEventListener("change", (e) => {
+      if (e.target.type === "radio") {
+        updateSummary();
+      }
+    });
+
+    // Button actions
+    const btnAllPresent = document.getElementById("btnAllPresent");
+    const btnAllAbsent = document.getElementById("btnAllAbsent");
+    const btnClear = document.getElementById("btnClear");
+    const btnSubmit = document.getElementById("btnSubmit");
+
+    btnAllPresent.addEventListener("click", () => {
+      const rows = tbody.querySelectorAll("tr");
+      rows.forEach((row, index) => {
+        const radios = row.querySelectorAll(`input[name="student${index + 1}"]`);
+        radios.forEach((r) => {
+          if (r.value === "Present") r.checked = true;
+        });
+      });
+      updateSummary();
+    });
+
+    btnAllAbsent.addEventListener("click", () => {
+      const rows = tbody.querySelectorAll("tr");
+      rows.forEach((row, index) => {
+        const radios = row.querySelectorAll(`input[name="student${index + 1}"]`);
+        radios.forEach((r) => {
+          if (r.value === "Absent") r.checked = true;
+        });
+      });
+      updateSummary();
+    });
+
+    btnClear.addEventListener("click", () => {
+      const radios = tbody.querySelectorAll("input[type='radio']");
+      radios.forEach((r) => (r.checked = false));
+      updateSummary();
+    });
+
+    btnSubmit.addEventListener("click", () => {
+      updateSummary();
+
+      const cls = document.getElementById("classSelect").value;
+      const sub = document.getElementById("subjectSelect").value;
+      const date = dateInput.value;
+      const present = presentCountEl.textContent;
+      const absent = absentCountEl.textContent;
+
+      // For now, just show a message (no backend)
+      saveMessageEl.textContent = `Attendance saved for ${cls} - ${sub} on ${date}. Present: ${present}, Absent: ${absent}`;
+      saveMessageEl.style.color = "#4ade80";
+    });
+
+    // Initialize summary on load
+    updateSummary();
+  </script>
+</body>
+</html>

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Staff Attendance Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Shared styles (navbar, brand, etc.) -->
   <link rel="stylesheet" href="style.css" />
@@ -21,6 +22,7 @@
       min-height: 100vh;
       margin: 0;
       padding: 0 10px 30px;
+      overflow-x: hidden; /* prevent side scroll */
     }
 
     /* Same gap bar as in branch-options.html */
@@ -158,7 +160,7 @@
     .table-wrapper {
       margin-top: 8px;
       border-radius: 12px;
-      overflow: hidden;
+      overflow-x: auto;   /* ✅ Scroll horizontally on mobile */
       border: 1px solid #1f2937;
       background: #020617;
     }
@@ -167,6 +169,7 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
+      min-width: 600px;   /* ✅ Prevents table from shrinking too much */
     }
 
     thead {
@@ -203,6 +206,7 @@
       display: flex;
       gap: 12px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .status-group label {
@@ -260,20 +264,60 @@
       margin-left: 3px;
     }
 
+    /* ✅ Mobile optimization */
     @media (max-width: 640px) {
+      body {
+        padding: 0 6px 20px;
+      }
+
+      .container {
+        margin-top: 12px;
+        padding: 14px;
+        border-radius: 12px;
+      }
+
       .header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
+        gap: 6px;
+      }
+
+      .header-left h1 {
+        font-size: 18px;
+      }
+
+      .header-left p {
+        font-size: 12px;
       }
 
       .header-right {
         text-align: left;
+        font-size: 11px;
       }
 
-      thead th:nth-child(3),
-      tbody td:nth-child(3) {
-        display: none; /* hide Dept on small screens */
+      .controls {
+        gap: 8px;
+      }
+
+      .controls .field {
+        width: 100%;
+      }
+
+      .btn-row {
+        gap: 6px;
+      }
+
+      .btn {
+        font-size: 12px;
+        padding: 7px 12px;
+      }
+
+      .summary-badges {
+        width: 100%;
+      }
+
+      .summary-pill {
+        font-size: 11px;
       }
     }
   </style>
@@ -582,7 +626,8 @@
       const absent = absentCountEl.textContent;
 
       // For now, just show a message (no backend)
-      saveMessageEl.textContent = `Attendance saved for ${cls} - ${sub} on ${date}. Present: ${present}, Absent: ${absent}`;
+      saveMessageEl.textContent =
+        `Attendance saved for ${cls} - ${sub} on ${date}. Present: ${present}, Absent: ${absent}`;
       saveMessageEl.style.color = "#4ade80";
     });
 
